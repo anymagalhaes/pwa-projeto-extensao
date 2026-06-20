@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Projeto de Extensão — Entidade X</title>
+    <title>Projeto de Extensão — Escola Solidária</title>
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -60,8 +60,7 @@
     <img
         src="img/escola.jpg"
         alt="Fachada da Escola Solidária"
-        class="w-full rounded-lg shadow-lg mt-4 object-cover max-h-96">
-
+        class="w-full rounded-xl shadow-xl mt-4 object-cover max-h-96 border-4 border-yellow-400">
 </section>
 
     <!-- ÁREA DE CENÁRIOS: escolha 1 (A, B ou C) -->
@@ -84,7 +83,7 @@
             aria-describedby="d-turma">
             <small id="d-turma" class="text-slate-700">Ex.: 2º ano A</small>
         </div>
-        <button class="rounded bg-sky-600 px-4 py-2 text-white hover:bg-sky-700
+        <button class="rounded bg-sky-600 px-4 py-2 text-white hover:bg-blue-800
         focus:outline-none focus:ring-2 focus:ring-sky-400"
         aria-label="Adicionar inscrição">Adicionar</button>
     </form>
@@ -108,12 +107,12 @@
     </ul>
 
     <div class="mt-4 flex items-center gap-4">
-        <p class="text-slate-800 font-medium">
+        <p class="text-blue-900 font-bold text-lg">
             Total de inscritos: {{ contador }}
         </p>
 
         <button
-            class="rounded-lg bg-sky-600 px-4 py-2 text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-400"
+            class="rounded-lg bg-sky-600 px-4 py-2 text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
             @click="contador++"
             aria-label="Somar um ao contador">
             Somar +1
