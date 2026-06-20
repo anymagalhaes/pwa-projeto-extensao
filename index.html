@@ -4,138 +4,327 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Projeto de Extensão — Escola Solidária</title>
-    <!-- Tailwind CSS (CDN) -->
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonte de Texto Roboto -->
     <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-    rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
         }
     </style>
+
     <!-- Manifest PWA -->
     <link rel="manifest" href="manifest.webmanifest">
-    <!-- Cor do tema do app (PWA) -->
-    <meta name="theme-color" content="#0ea5e9">
+
+    <meta name="theme-color" content="#1d4ed8">
 </head>
+
 <body class="min-h-screen bg-slate-50 text-slate-800">
-    <!-- Link pular para conteúdo (Acessibilidade) -->
+
+    <!-- Acessibilidade -->
     <a href="#conteudo-principal"
-    class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-sky-700 text-white px-3 py-2 rounded">
-    Ir para o conteúdo principal
+       class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-sky-700 text-white px-3 py-2 rounded">
+        Ir para o conteúdo principal
     </a>
-<header class="bg-gradient-to-r from-blue-900 via-blue-700 to-yellow-500 text-white shadow-lg">
-    <div class="max-w-5xl mx-auto px-4 py-6">
-        <h1 class="text-3xl font-bold">Escola Solidária</h1>
-        <p class="mt-1">Site acessível, responsivo e instalável (PWA).</p>
-    </div>
-</header> 
-<main id="app" class="max-w-5xl mx-auto px-4 pb-24">
-    <!-- Navegação responsiva -->
-    <nav class="mt-4" aria-label="Navegação principal">
-        <button
-            class="md:hidden inline-flex items-center gap-2 rounded bg-sky-600 px-3 py-2
-    text-white
-                focus:outline-none focus:ring-2 focus:ring-sky-400"
-            @click="menuAberto = !menuAberto"
-            :aria-expanded="menuAberto.toString()"
-            aria-controls="menu-principal">
-        ☰ Menu
-        </button>
-        <ul id="menu-principal" class="mt-3 md:mt-0 md:flex md:gap-6"
-            :class="menuAberto ? 'block' : 'hidden md:flex'">
-            <li><a class="hover:underline focus:outline-none focus:ring-2 focus:ring-sky-400" href="#inicio">Início</a></li>
-            <li><a class="hover:underline focus:outline-none focus:ring-2 focus:ring-sky-400" href="#sobre">Sobre</a></li>
-            <li><a class="hover:underline focus:outline-none focus:ring-2 focus:ring-sky-400" href="#contato">Contato</a></li>
-        </ul>
-    </nav>
-<section id="inicio" aria-labelledby="sec-intro"
-         class="bg-white rounded-xl shadow p-6 mt-6">
 
-    <h2 id="sec-intro" class="text-xl font-semibold">
-        Boas-vindas
-    </h2>
-
-    <img
-        src="img/escola.jpg"
-        alt="Fachada da Escola Solidária"
-        class="w-full rounded-xl shadow-xl mt-4 object-cover max-h-96 border-4 border-yellow-400">
-</section>
-
-    <!-- ÁREA DE CENÁRIOS: escolha 1 (A, B ou C) -->
-<section id="sobre" aria-labelledby="insc" class="bg-white rounded-xl shadow p-6 mt6">
-    <h2 id="insc" class="text-xl font-semibold">Inscrição em Atividade</h2>
-    <form class="mt-4 space-y-3" @submit.prevent="adicionarInscrito">
-        <div>
-            <label for="nome" class="block font-medium">Nome do aluno</label>
-            <input id="nome" v-model="form.nome" required
-            class="mt-1 w-full rounded border-slate-300 px-3 py-2 focus:outline-none
-            focus:ring-2 focus:ring-sky-400"
-            aria-describedby="d-nome">
-            <small id="d-nome" class="text-slate-700">Obrigatório</small>
+    <!-- Cabeçalho -->
+    <header class="bg-gradient-to-r from-blue-900 via-blue-700 to-yellow-500 text-white shadow-lg">
+        <div class="max-w-5xl mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold">
+                <img src="icons/education.png" alt="Logo da Escola Solidária" class="h-10 inline-block">
+                Escola Solidária
+            </h1>
+            <p class="mt-1">
+                Site acessível, responsivo e instalável (PWA).
+            </p>
         </div>
-        <div>
-            <label for="turma" class="block font-medium">Turma</label>
-            <input id="turma" v-model="form.turma" required
-            class="mt-1 w-full rounded border-slate-300 px-3 py-2 focus:outline-none
-            focus:ring-2 focus:ring-sky-400"
-            aria-describedby="d-turma">
-            <small id="d-turma" class="text-slate-700">Ex.: 2º ano A</small>
-        </div>
-        <button class="rounded bg-sky-600 px-4 py-2 text-white hover:bg-blue-800
-        focus:outline-none focus:ring-2 focus:ring-sky-400"
-        aria-label="Adicionar inscrição">Adicionar</button>
-    </form>
-</section>
-<section id="contato" aria-labelledby="lista" class="bg-white rounded-xl shadow p-6 mt-6">
-    <h2 id="lista" class="text-xl font-semibold">Inscritos</h2>
+    </header>
 
-    <ul class="mt-3 space-y-2">
-        <li v-for="(i, idx) in inscritos" :key="idx"
-            class="flex items-center justify-between gap-3 border-b border-slate-200 pb-2">
+    <main id="app" class="max-w-5xl mx-auto px-4 pb-24">
 
-            <span>{{ i.nome }} — {{ i.turma }}</span>
+        <!-- Menu -->
+        <nav class="mt-4" aria-label="Navegação principal">
 
             <button
-                class="rounded bg-slate-200 px-3 py-1 hover:bg-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-400"
-                @click="removerInscrito(idx)"
-                aria-label="Remover inscrito">
-                Remover
-            </button>
-        </li>
-    </ul>
+                class="md:hidden inline-flex items-center gap-2 rounded bg-blue-700 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                @click="menuAberto = !menuAberto"
+                :aria-expanded="menuAberto.toString()"
+                aria-controls="menu-principal">
 
-    <div class="mt-4 flex items-center gap-4">
-        <p class="text-blue-900 font-bold text-lg">
-            Total de inscritos: {{ contador }}
+                ☰ Menu
+            </button>
+
+            <ul id="menu-principal"
+                class="mt-3 md:mt-0 md:flex md:gap-6"
+                :class="menuAberto ? 'block' : 'hidden md:flex'">
+
+                <li>
+                    <a class="hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400"
+                       href="#inicio">
+                        Início
+                    </a>
+                </li>
+
+                <li>
+                    <a class="hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400"
+                       href="#sobre">
+                        Inscrição
+                    </a>
+                </li>
+
+                <li>
+                    <a class="hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400"
+                       href="#contato">
+                        Inscritos
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <!-- Boas-vindas -->
+        <section id="inicio"
+                 aria-labelledby="sec-intro"
+                 class="bg-white rounded-xl shadow p-6 mt-6">
+
+            <h2 id="sec-intro"
+                class="text-2xl font-bold text-blue-900">
+
+                Bem-vindos à Escola Solidária
+            </h2>
+
+            <p class="mt-2 text-slate-700">
+                Promovendo educação, inclusão e desenvolvimento para todos os alunos.
+            </p>
+
+            <div class="mt-4 p-1 bg-gradient-to-r from-blue-900 via-blue-700 to-yellow-500 rounded-xl shadow-xl">
+                <img
+                    src="img/escola.jpg"
+                    alt="Fachada da Escola Solidária"
+                    class="w-full rounded-lg object-cover max-h-96">
+            </div>
+
+        </section>
+
+        <!-- Atividades e Eventos -->
+        <section
+            class="bg-white rounded-xl shadow p-6 mt-6">
+
+            <h2 class="text-2xl font-bold text-blue-900">
+                <img src="icons/calendar.png" alt="Logo da Atividades e Eventos" class="h-10 inline-block">
+                Atividades e Eventos
+            </h2>
+
+            <p class="mt-2 text-slate-700">
+                Confira algumas atividades promovidas pela escola.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+
+                <div class="bg-blue-100 rounded-lg p-4 shadow border-l-4 border-blue-700">
+                    <h3 class="font-bold text-blue-900">
+                        📚 Feira do Livro
+                    </h3>
+
+                    <p class="mt-2 text-slate-700">
+                        Incentivo à leitura com exposição e troca de livros.
+                    </p>
+                </div>
+
+                <div class="bg-yellow-100 rounded-lg p-4 shadow border-l-4 border-yellow-500">
+                    <h3 class="font-bold text-yellow-800">
+                        🎨 Oficina de Artes
+                    </h3>
+
+                    <p class="mt-2 text-slate-700">
+                        Atividades de pintura, desenho e criatividade.
+                    </p>
+                </div>
+
+                <div class="bg-blue-100 rounded-lg p-4 shadow border-l-4 border-blue-700">
+                    <h3 class="font-bold text-blue-800">
+                        ⚽ Jogos Estudantis
+                    </h3>
+
+                    <p class="mt-2 text-slate-700">
+                        Integração entre alunos através do esporte.
+                    </p>
+                </div>
+
+            </div>
+            <!-- Galeria de Fotos -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold text-blue-900 mb-4">
+                    <img src="icons/camera.png" alt="Logo da Galeria de Fotos" class="h-10 inline-block">
+                    Fotos das Atividades
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                    <div>
+                        <img
+                            src="img/feira-livro.jpg"
+                            alt="Alunos participando da Feira do Livro"
+                            class="w-full h-56 object-cover rounded-lg shadow">
+                        <p class="mt-2 text-center text-slate-700">
+                            Feira do Livro
+                        </p>
+                    </div>
+
+                    <div>
+                        <img
+                            src="img/oficina-artes.jpg"
+                            alt="Alunos na Oficina de Artes"
+                            class="w-full h-56 object-cover rounded-lg shadow">
+                        <p class="mt-2 text-center text-slate-700">
+                            Oficina de Artes
+                        </p>
+                    </div>
+
+                    <div>
+                        <img
+                            src="img/jogos-estudantis.jpg"
+                            alt="Alunos participando dos Jogos Estudantis"
+                            class="w-full h-56 object-cover rounded-lg shadow">
+                        <p class="mt-2 text-center text-slate-700">
+                            Jogos Estudantis
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Formulário -->
+        <section id="sobre"
+                 aria-labelledby="insc"
+                 class="bg-white rounded-xl shadow p-6 mt-6">
+
+            <h2 id="insc"
+                class="text-2xl font-bold text-blue-900">
+                <img src="icons/contract.png" alt="Logo da Inscrição" class="h-10 inline-block">
+                Inscrição em Atividade
+            </h2>
+
+            <form class="mt-4 space-y-3"
+                  @submit.prevent="adicionarInscrito">
+
+                <div>
+                    <label for="nome" class="block font-medium">
+                        Nome do aluno
+                    </label>
+
+                <div class="mt-1 p-1 bg-gradient-to-r from-blue-900 via-blue-700 to-yellow-500 rounded-lg">
+                    <input
+                        id="nome"
+                        v-model="form.nome"
+                        required
+                        class="w-full rounded-md px-3 py-2 focus:outline-none">
+                </div>
+                    <small class="text-slate-700">
+                        Obrigatório
+                    </small>
+                </div>
+
+                <div>
+                    <label for="turma" class="block font-medium">
+                        Turma
+                    </label>
+
+                <div class="mt-1 p-1 bg-gradient-to-r from-blue-900 via-blue-700 to-yellow-500 rounded-lg">
+
+                    <input
+                        id="turma"
+                        v-model="form.turma"
+                        required
+                        class="w-full rounded-md px-3 py-2 focus:outline-none">
+                </div>
+                    <small class="text-slate-700">
+                        Ex.: 2º ano A
+                    </small>
+                </div>
+
+                <button
+                    class="rounded bg-blue-700 px-4 py-2 text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+                    Adicionar
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- Lista -->
+        <section id="contato"
+                 aria-labelledby="lista"
+                 class="bg-white rounded-xl shadow p-6 mt-6">
+
+            <h2 id="lista"
+                class="text-2xl font-bold text-blue-900">
+                <img src="icons/award.png" alt="Logo de Inscritos" class="h-10 inline-block">
+                Inscritos
+            </h2>
+
+            <ul class="mt-3 space-y-2">
+                <li
+                    v-for="(i, idx) in inscritos"
+                    :key="idx"
+                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-200 pb-2">
+
+                    <span>
+                        {{ i.nome }} — {{ i.turma }}
+                    </span>
+
+                    <button
+                        class="rounded bg-slate-200 px-3 py-1 hover:bg-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        @click="removerInscrito(idx)">
+
+                        Remover
+                    </button>
+                </li>
+            </ul>
+
+            <div class="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+
+                <p class="text-blue-900 font-bold text-lg">
+                    Total de inscritos: {{ inscritos.length }}
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-700">
+
+        <p>
+            2026 — Escola Solidária | Projeto de Extensão Front-end | Por: Stefany Magalhães Marques
         </p>
 
-        <button
-            class="rounded-lg bg-sky-600 px-4 py-2 text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
-            @click="contador++"
-            aria-label="Somar um ao contador">
-            Somar +1
-        </button>
-    </div>
-</section>
+    </footer>
 
- <!-- Cole aqui a seção do CENÁRIO ESCOLHIDO (ver PASSO 3) -->
- </main>
- <footer class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-700">
-    <p>2026 — Escola Solidária | Projeto de Extensão Front-end</p>
- </footer>
- <!-- Vue 3 (CDN, produção) -->
- <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
- <!-- App -->
- <script src="main.js"></script>
- <!-- Registro do Service Worker (PWA) -->
- <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js');
-    });
-    }
- </script>
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <!-- App -->
+    <script src="main.js"></script>
+
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
+
 </body>
 </html>
